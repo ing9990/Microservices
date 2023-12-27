@@ -16,11 +16,9 @@ import java.util.Optional;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class AccountsServiceImpl implements IAccountsService {
 
     private final AccountsRepository accountsRepository;
