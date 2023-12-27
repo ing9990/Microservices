@@ -12,16 +12,13 @@ import com.ing9990.accounts.mapper.CustomerMapper;
 import com.ing9990.accounts.repository.AccountsRepository;
 import com.ing9990.accounts.repository.CustomerRepository;
 import com.ing9990.accounts.service.IAccountsService;
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class AccountsServiceImpl implements IAccountsService {
 
     private final AccountsRepository accountsRepository;
@@ -53,8 +50,6 @@ public class AccountsServiceImpl implements IAccountsService {
         newAccount.setAccountNumber(randomAccNumber);
         newAccount.setAccountType(AccountsConstants.SAVINGS);
         newAccount.setBranchAddress(AccountsConstants.ADDRESS);
-        newAccount.setCreatedAt(LocalDateTime.now());
-        newAccount.setUpdatedAt(LocalDateTime.now());
         return newAccount;
     }
 
