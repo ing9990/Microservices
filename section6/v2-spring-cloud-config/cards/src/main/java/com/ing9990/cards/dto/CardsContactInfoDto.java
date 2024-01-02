@@ -1,4 +1,4 @@
-package com.ing9990.loans.dto;
+package com.ing9990.cards.dto;
 
 import java.util.List;
 import java.util.Map;
@@ -6,10 +6,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+@ConfigurationProperties(prefix = "cards")
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "loans")
-public class LoansContactInfo {
+public class CardsContactInfoDto {
 
     private String message;
     private Map<String, String> contactDetails;

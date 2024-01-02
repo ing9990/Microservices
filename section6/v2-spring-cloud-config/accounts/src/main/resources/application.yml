@@ -26,3 +26,14 @@ spring:
 
     # optional: 을 접두사로 붙이면 설정 파일이 존재하지 않아도 서버를 시작할 수 있다.
     # import: "optional:configserver:http://localhost:8071"
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
