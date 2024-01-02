@@ -2,6 +2,11 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: "accounts"
+  profiles:
+    active: "prod"
+
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
@@ -15,23 +20,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-
   config:
-    import:
-      - "application_qa.yml"
-      - "application_prod.yml"
-  profiles:
-    active:
-      - "qa"
+    # configserver:[Config server 주소]
+    import: "configserver:http://localhost:8071/"
 
-build:
-  version: "3.0"
-
-accounts:
-  message: "Welcome to Eazybank accounts related local APIs"
-  contactDetails:
-    name: "Taewoo"
-    email: "mail80782258@google.com"
-  onCallSupport:
-    - (82) 8078-12345
-    - (82) 8078-54321
+    # optional: 을 접두사로 붙이면 설정 파일이 존재하지 않아도 서버를 시작할 수 있다.
+    # import: "optional:configserver:http://localhost:8071"
