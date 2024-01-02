@@ -1,8 +1,8 @@
 build:
   version: "3.0"
 
-accounts:
-  message: "Welcome to Eazybank accounts related local APIs"
+loans:
+  message: "Welcome to Eazybank accounts related QA APIs"
   contactDetails:
     name: "Taewoo"
     email: "mail80782258@google.com"

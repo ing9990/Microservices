@@ -1,7 +1,10 @@
 package com.ing9990.loans.controller;
 
+import static org.springframework.http.HttpStatus.OK;
+
 import com.ing9990.loans.constants.LoansConstants;
 import com.ing9990.loans.dto.ErrorResponseDto;
+import com.ing9990.loans.dto.LoansContactInfo;
 import com.ing9990.loans.dto.LoansDto;
 import com.ing9990.loans.dto.ResponseDto;
 import com.ing9990.loans.service.ILoansService;
@@ -14,6 +17,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Env;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +36,13 @@ import org.springframework.web.bind.annotation.*;
 )
 @RestController
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Validated
 public class LoansController {
 
-    private ILoansService iLoansService;
+    private final ILoansService iLoansService;
+    private final Environment env;
+    private final LoansContactInfo loansContactInfo;
 
     @Operation(
             summary = "Create Loan REST API",
@@ -164,4 +172,19 @@ public class LoansController {
         }
     }
 
+
+    @GetMapping("/java-version")
+    public ResponseEntity<String> getJavaVersion(){
+        return ResponseEntity.status(OK).body(env.getProperty("JAVA_HOME"));
+    }
+
+    @GetMapping("/maven-version")
+    public ResponseEntity<String> getMavenVersion(){
+        return ResponseEntity.status(OK).body(env.getProperty("MAVEN_HOME"));
+    }
+
+    @GetMapping("/contact-info")
+    public ResponseEntity<LoansContactInfo> getContactInfo(){
+        return ResponseEntity.status(OK).body(loansContactInfo);
+    }
 }
