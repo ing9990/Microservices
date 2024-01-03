@@ -1,0 +1,61 @@
+services:
+  configserver:
+    image: "ing9990/configserver:s6"
+    container_name: "configserver-ms"
+    ports:
+      - "8071:8071"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - eazybank
+  accounts:
+    image: "ing9990/accounts:s6"
+    container_name: "accounts-ms"
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - eazybank
+    environment:
+      SPRING_APPLICATION_NAME: accounts
+      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
+      SPRING_PROFILES_ACTIVE: default
+  loans:
+    image: "ing9990/loans:s6"
+    container_name: "loans-ms"
+    ports:
+      - "8090:8090"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - eazybank
+    environment:
+      SPRING_APPLICATION_NAME: loans
+      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
+      SPRING_PROFILES_ACTIVE: default
+  cards:
+    image: "ing9990/cards:s6"
+    container_name: "cards-ms"
+    ports:
+      - "9090:9090"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - eazybank
+    environment:
+      SPRING_APPLICATION_NAME: cards
+      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
+      SPRING_PROFILES_ACTIVE: default
+
+networks:
+  eazybank:
+    driver: bridge
