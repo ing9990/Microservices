@@ -23,6 +23,18 @@ spring:
           # pull? ?? ?? (? ?? ??? ????? ??? ???)
           force-pull: true
 
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 encrypt:
   key: d203bdab1cb64454878e745bdecc7c9d
 
