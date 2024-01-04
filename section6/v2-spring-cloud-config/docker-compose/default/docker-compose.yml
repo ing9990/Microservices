@@ -1,5 +1,5 @@
 services:
-  rabbitmq:
+  rabbit:
     image: rabbitmq:3.12-management
     hostname: rabbitmq
     ports:
@@ -16,62 +16,59 @@ services:
       service: network-deploy-service
 
   configserver:
-    image: "ing9990/configserver:s6"
-    container_name: "configserver-ms"
+    image: "ing9990/configserver:s6-bugfix"
+    container_name: configserver-ms
     ports:
       - "8071:8071"
+      - "18071:18071"
+    expose:
+      - 8071
     depends_on:
-      rabbitmq:
+      rabbit:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
-      # 10초 마다
       interval: 10s
-      # 5초 간 기다림
       timeout: 5s
-      # 10번 재시도
       retries: 10
-      # 시작 후 10초 뒤에
       start_period: 10s
     extends:
       file: common-config.yml
       service: microservice-base-config
 
   accounts:
-    image: "ing9990/accounts:s6"
-    container_name: "accounts-ms"
+    image: "ing9990/accounts:s6-conf"
+    container_name: accounts-ms
     ports:
       - "8080:8080"
     environment:
-      SPRING_APPLICATION_NAME: accounts
+      SPRING_APPLICATION_NAME: "accounts"
     extends:
       file: common-config.yml
-      service: microservice-base-config
+      service: microservice-configserver-config
 
   loans:
-    image: "ing9990/loans:s6"
-    container_name: "loans-ms"
+    image: "ing9990/loans:s6-conf"
+    container_name: loans-ms
     ports:
       - "8090:8090"
     environment:
-      SPRING_APPLICATION_NAME: loans
+      SPRING_APPLICATION_NAME: "loans"
     extends:
       file: common-config.yml
-      service: microservice-base-config
+      service: microservice-configserver-config
 
   cards:
-    image: "ing9990/cards:s6"
-    container_name: "cards-ms"
+    image: "ing9990/cards:s6-conf"
+    container_name: cards-ms
     ports:
-      - "9090:9090"
-    networks:
-      - eazybank
+      - "9000:9000"
     environment:
-      SPRING_APPLICATION_NAME: cards
+      SPRING_APPLICATION_NAME: "cards"
     extends:
       file: common-config.yml
-      service: microservice-base-config
+      service: microservice-configserver-config
 
 networks:
   eazybank:
-    driver: bridge
+    driver: "bridge"

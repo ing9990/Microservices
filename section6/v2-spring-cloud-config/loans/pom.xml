@@ -12,7 +12,7 @@
   <groupId>com.ing9990</groupId>
   <artifactId>loans</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>loans</name>
+  <name>loans-s6</name>
   <description>Microservice for Loans</description>
   <properties>
     <java.version>17</java.version>
@@ -94,10 +94,10 @@
       <plugin>
         <groupId>com.google.cloud.tools</groupId>
         <artifactId>jib-maven-plugin</artifactId>
-        <version>3.4.0</version>
+        <version>3.3.2</version>
         <configuration>
           <to>
-            <image>ing9990/${project.artifactId}:s6</image>
+            <image>ing9990/${project.artifactId}:s6-conf</image>
           </to>
         </configuration>
       </plugin>

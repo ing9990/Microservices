@@ -4,7 +4,6 @@ server:
 spring:
   application:
     name: "cards"
-
   profiles:
     active: "prod"
 
@@ -17,12 +16,12 @@ spring:
     console:
       enabled: true
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
     show-sql: true
-  config:
-    import: "configserver:http://localhost:8071/"
+
+    #config:
+    # import: "optional:configserver:http://localhost:8071/"
 
   rabbitmq:
     host: "localhost"

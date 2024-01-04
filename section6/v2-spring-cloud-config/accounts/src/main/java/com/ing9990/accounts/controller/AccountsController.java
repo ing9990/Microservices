@@ -45,9 +45,7 @@ public class AccountsController {
 
     private final IAccountsService iAccountsService;
     private final AccountContactInfo accountContactInfo;
-
-    @Autowired
-    private Environment env;
+    private final Environment env;
 
     @Value("${build.version}")
     private String buildVersion;
