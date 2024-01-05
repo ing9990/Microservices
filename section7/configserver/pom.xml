@@ -54,7 +54,7 @@
         <version>3.3.2</version>
         <configuration>
           <to>
-            <image>ing9990/${project.artifactId}:s6-bugfix</image>
+            <image>ing9990/${project.artifactId}:s7</image>
           </to>
         </configuration>
       </plugin>
