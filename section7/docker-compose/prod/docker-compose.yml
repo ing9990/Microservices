@@ -5,6 +5,7 @@ services:
       - 3306:3306
     environment:
       MYSQL_DATABASE: accountsdb
+    extends:
       file: common-config.yml
       service: microservice-db-config
 
@@ -29,7 +30,7 @@ services:
       service: microservice-db-config
 
   configserver:
-    image: "ing9990/configserver:s6-bugfix"
+    image: "ing9990/configserver:s7"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -47,7 +48,7 @@ services:
       service: microservice-base-config
 
   accounts:
-    image: "ing9990/accounts:s6-conf"
+    image: "ing9990/accounts:s7"
     container_name: accounts-ms
     depends_on:
       accountsdb:
@@ -62,7 +63,7 @@ services:
       service: microservice-configserver-config
 
   loans:
-    image: "ing9990/loans:s6-conf"
+    image: "ing9990/loans:s7"
     container_name: loans-ms
     depends_on:
       loansdb:
@@ -71,13 +72,13 @@ services:
       - "8090:8090"
     environment:
       SPRING_APPLICATION_NAME: "loans"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://loansdb:3307/loansdb"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://loansdb:3306/loansdb"
     extends:
       file: common-config.yml
       service: microservice-configserver-config
 
   cards:
-    image: "ing9990/cards:s6-conf"
+    image: "ing9990/cards:s7"
     container_name: cards-ms
     depends_on:
       cardsdb:
@@ -86,7 +87,7 @@ services:
       - "9000:9000"
     environment:
       SPRING_APPLICATION_NAME: "cards"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://cardsdb:3307/cardsdb"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://cardsdb:3306/cardsdb"
     extends:
       file: common-config.yml
       service: microservice-configserver-config
