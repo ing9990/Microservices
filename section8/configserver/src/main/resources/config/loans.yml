@@ -1,0 +1,11 @@
+build:
+  version: "3.0"
+
+loans:
+  message: "Welcome to Eazybank accounts related local APIs"
+  contactDetails:
+    name: "Taewoo"
+    email: "mail80782258@google.com"
+  onCallSupport:
+    - (82) 8078-12345
+    - (82) 8078-54321

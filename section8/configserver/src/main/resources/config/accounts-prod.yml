@@ -1,0 +1,11 @@
+build:
+  version: "1.0"
+
+accounts:
+  message: "Welcome to Eazybank accounts related Prod APIs"
+  contactDetails:
+    name: "Taewoo - Product Owner"
+    email: "prod@google.com"
+  onCallSupport:
+    - (82) 8078-5678
+    - (82) 8078-8765
