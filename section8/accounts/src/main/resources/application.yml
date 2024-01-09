@@ -50,6 +50,6 @@ eureka:
 
 info:
   app:
-    name: "accounts"
+    name: ${spring.application.name}
     description: "Eazy Bank Accounts Application"
     version: "1.0.0"
