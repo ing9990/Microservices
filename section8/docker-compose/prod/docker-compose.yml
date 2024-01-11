@@ -28,15 +28,11 @@ services:
     extends:
       file: common-config.yml
       service: microservice-db-config
-
   configserver:
-    image: "ing9990/configserver:s7"
+    image: "ing9990/configserver:s8"
     container_name: configserver-ms
     ports:
       - "8071:8071"
-      - "18071:18071"
-    expose:
-      - 8071
     healthcheck:
       test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
@@ -47,12 +43,26 @@ services:
       file: common-config.yml
       service: microservice-base-config
 
+  eurekaserver:
+    image: "ing9990/eurekaserver:s8"
+    container_name: eurekaserver-ms
+    ports:
+      - "8070:8070"
+    healthcheck:
+      test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+    environment:
+      SPRING_APPLICATION_NAME: "eurekaserver"
+
   accounts:
-    image: "ing9990/accounts:s7"
+    image: "ing9990/accounts:s8"
     container_name: accounts-ms
-    depends_on:
-      accountsdb:
-        condition: service_healthy
     ports:
       - "8080:8080"
     environment:
@@ -60,14 +70,11 @@ services:
       SPRING_DATASOURCE_URL: "jdbc:mysql://accountsdb:3306/accountsdb"
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eureka-config
 
   loans:
-    image: "ing9990/loans:s7"
+    image: "ing9990/loans:s8"
     container_name: loans-ms
-    depends_on:
-      loansdb:
-        condition: service_healthy
     ports:
       - "8090:8090"
     environment:
@@ -75,14 +82,11 @@ services:
       SPRING_DATASOURCE_URL: "jdbc:mysql://loansdb:3306/loansdb"
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eureka-config
 
   cards:
-    image: "ing9990/cards:s7"
+    image: "ing9990/cards:s8"
     container_name: cards-ms
-    depends_on:
-      cardsdb:
-        condition: service_healthy
     ports:
       - "9000:9000"
     environment:
@@ -90,7 +94,7 @@ services:
       SPRING_DATASOURCE_URL: "jdbc:mysql://cardsdb:3306/cardsdb"
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eureka-config
 
 networks:
   eazybank:
