@@ -1,0 +1,57 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: "cards"
+  profiles:
+    active: "prod"
+
+  datasource:
+    url: jdbc:mysql://localhost:3308/cardsdb
+    username: root
+    password: root
+  jpa:
+    show-sql: true
+    defer-datasource-initialization: true
+
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+
+  sql:
+    init:
+      mode: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+  info:
+    env:
+      enabled: true
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+    probes:
+      enabled: true
+
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8070/eureka/
+info:
+  app:
+    name: ${spring.application.name}
+    description: "Eazy Bank Cards Application"
+    version: "1.0.0"
