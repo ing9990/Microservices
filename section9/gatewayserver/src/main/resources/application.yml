@@ -7,8 +7,8 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: true
-
+          enabled: false
+          lowerCaseServiceId: true
 
 management:
   endpoints:
@@ -24,6 +24,6 @@ management:
 
 info:
   app:
-    name: ${spring.application.name}
+    name: "gatewayserver"
     description: "Eazy Bank Gateway Server Application"
     version: "1.0.0"
