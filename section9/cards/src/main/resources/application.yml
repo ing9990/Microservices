@@ -33,6 +33,15 @@ management:
   info:
     env:
       enabled: true
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+    probes:
+      enabled: true
+
+
 eureka:
   instance:
     prefer-ip-address: true

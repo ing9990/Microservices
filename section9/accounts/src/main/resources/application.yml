@@ -22,7 +22,6 @@ spring:
     init:
       mode: always
 
-
 management:
   endpoints:
     web:
@@ -30,6 +29,13 @@ management:
         include: "*"
   endpoint:
     shutdown:
+      enabled: true
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+    probes:
       enabled: true
   info:
     env:

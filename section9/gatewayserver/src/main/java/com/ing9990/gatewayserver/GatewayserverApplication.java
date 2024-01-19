@@ -1,5 +1,6 @@
 package com.ing9990.gatewayserver;
 
+import java.time.LocalDateTime;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -15,28 +16,28 @@ public class GatewayserverApplication {
 
     @Bean
     public RouteLocator eazyBankRouteConfig(RouteLocatorBuilder routeLocatorBuilder) {
-        final String google = "https://google.com";
-        final String googleSearchQuery = "/search?q=";
-
         return routeLocatorBuilder.routes()
             .route(p -> p
                 .path("/eazybank/accounts/**")
-                .filters(f -> f.rewritePath("/eazybank/accounts/(?<segment>.*)", "/${segment}"))
+                .filters(f -> f
+                    .rewritePath("/eazybank/accounts/(?<segment>.*)", "/${segment}")
+                    .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                )
                 .uri("lb://ACCOUNTS"))
             .route(p -> p
                 .path("/eazybank/loans/**")
-                .filters(f -> f.rewritePath("/eazybank/loans/(?<segment>.*)", "/${segment}"))
+                .filters(f -> f
+                    .rewritePath("/eazybank/loans/(?<segment>.*)", "/${segment}")
+                    .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                )
                 .uri("lb://LOANS"))
             .route(p -> p
                 .path("/eazybank/cards/**")
-                .filters(f -> f.rewritePath("/eazybank/cards/(?<segment>.*)", "/${segment}"))
+                .filters(f -> f
+                    .rewritePath("/eazybank/cards/(?<segment>.*)", "/${segment}")
+                    .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                )
                 .uri("lb://CARDS"))
-
-            // 구글로 검색 결과로 라우트 하도록 테스트
-            .route(p -> p
-                .path("/goto/google/**")
-                .filters(f -> f.rewritePath("/goto/google/(?<segment>.*)", googleSearchQuery + "${segment}"))
-                .uri(google))
             .build();
     }
 
